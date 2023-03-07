@@ -15,6 +15,46 @@
   </head>
 
   <body>
+
+      <nav>
+      <ul>
+
+          <li>
+          <a href="/users"> All users</a>
+          </li>
+
+          <li>
+            <a href="/photos">All public photos</a>
+          </li>
+
+          <li>
+            <a href="/user_sign_in">Sign in</a>
+          </li>
+
+        <li>
+            <a href="/user_sign_up">Sign up</a>
+        </li>
+
+        <li>
+          <%= session.fetch(:user_id) %>
+        </li>
+        
+      </ul>
+    </nav>
+
+      <% if notice.present? %>
+        <div class="alert alert-success" role="alert">
+        <%= notice %>
+        </div>
+      <% end %>
+
+      <% if alert.present? %>
+        <div class="alert alert-warning" role="alert">
+        <%= alert %>
+        </div>
+    <% end %>
+
+
     <%= yield %>
   </body>
 </html>
