@@ -19,41 +19,51 @@
       <nav>
       <ul>
 
-          <li>
-          <a href="/users"> All users</a>
-          </li>
+    <li>
+      <a href="/users"> All users </a>
+    </li>
 
-          <li>
-            <a href="/photos">All public photos</a>
-          </li>
+    <li>
+      <a href="/photos"> All public photos </a>
+    </li>
 
-          <li>
-            <a href="/user_sign_in">Sign in</a>
-          </li>
+<% if session.fetch(:user_id) != nil %>
 
-        <li>
-            <a href="/user_sign_up">Sign up</a>
-        </li>
+    <li>
+       <a href="/edit_user_profile"> <%= @current_user.username %> </a>
+    </li>
 
-        <li>
-          <%= session.fetch(:user_id) %>
-        </li>
-        
+    <li>
+       <a href="/user_sign_out"> Sign out </a>
+    </li>
+
+<% else %>
+
+    <li>
+        <a href="/user_sign_in"> Sign in </a>
+    </li>
+    <li>
+       <a href="/user_sign_up"> Sign up </a>
+    </li>
+    
+<% end %>
+
+       
       </ul>
-    </nav>
+</nav>
 
       <% if notice.present? %>
-        <div class="alert alert-success" role="alert">
+        <div>
         <%= notice %>
         </div>
       <% end %>
 
       <% if alert.present? %>
-        <div class="alert alert-warning" role="alert">
+        <div>
         <%= alert %>
         </div>
-    <% end %>
 
+    <% end %>
 
     <%= yield %>
   </body>

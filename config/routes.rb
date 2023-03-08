@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   
-  
   get("/", { :controller => "users", :action => "index" })
-  
   
   # Routes for the Like resource:
 
@@ -78,10 +76,15 @@ Rails.application.routes.draw do
   get("/users", { :controller => "users", :action => "index" })
   
   get("/users/:path_id", { :controller => "users", :action => "show" })
-  
+
+ 
   # UPDATE
   
-  post("/modify_user/:path_id", { :controller => "users", :action => "update" })
+  get("/edit_user_profile", { :controller => "users", :action => "update_form" })
+
+  post("/modify_user/:path_id", { :controller => "users", :action => "update_user" })
+  
+  post("/modify_user", { :controller => "users", :action => "update" })
   
   # DELETE
   get("/delete_user/:path_id", { :controller => "users", :action => "destroy" })
@@ -104,6 +107,12 @@ Rails.application.routes.draw do
   
   # DELETE
   get("/delete_photo/:path_id", { :controller => "photos", :action => "destroy" })
+
+  get("/users/:path_id/discover", { :controller => "users", :action => "discover" })
+
+  get("/users/:path_id/feed", { :controller => "users", :action => "feed" })
+
+  get("/users/:path_id/liked_photos", { :controller => "users", :action => "liked_photos" })
 
   #------------------------------
 

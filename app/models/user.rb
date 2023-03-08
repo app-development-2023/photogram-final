@@ -5,6 +5,7 @@
 #  id              :integer          not null, primary key
 #  comments_count  :integer
 #  email           :string
+#  images          :string
 #  likes_count     :integer
 #  password_digest :string
 #  private         :boolean
@@ -20,6 +21,8 @@ class User < ApplicationRecord
       :uniqueness => { :case_sensitive => false }
     }
   )
+
+  has_many(:owned_photos, {:class_name => "Photo", :foreign_key => "owner_id"})
 
   has_secure_password
 
@@ -90,4 +93,5 @@ class User < ApplicationRecord
 
     return Photo.where({ :id => array_of_discover_photo_ids })
   end
+
 end

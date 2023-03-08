@@ -12,8 +12,11 @@
 #  owner_id       :integer
 #
 class Photo < ApplicationRecord
-  validates(:poster, { :presence => true })
+
   validates(:image, { :presence => true })
+  validates(:owner_id, { :presence => true })
+
+  belongs_to(:photo_owner, {:class_name => "User", :foreign_key => "owner_id"})
 
   def poster
     return User.where({ :id => self.owner_id }).at(0)
@@ -36,4 +39,7 @@ class Photo < ApplicationRecord
   def fan_list
     return self.fans.map_relation_to_array(:username).to_sentence
   end
+
+  mount_uploader :image, ImageUploader
+
 end
