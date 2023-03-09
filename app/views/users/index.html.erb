@@ -1,14 +1,8 @@
-<div>
-  <div>
-    <h1>
+ <h1>
       List of all users
-    </h1>
-  </div>
-</div>
+</h1>
 
-<div>
-  <div>
-    <table border="1">
+ <table border="1">
       <tr>
         <th>
           Username
@@ -17,7 +11,6 @@
         <th>
           Private?
         </th>
-
 
         <th></th>
         <th></th>
@@ -30,27 +23,38 @@
         </td>
 
         <td>
-          <% if a_user.private == true %>
+      <% if a_user.private == true %>
             Yes
-          <% else %>
+      <% else %>
             No
-          <% end %>
+      <% end %>
         </td>
 
+<td>
 <% if session.fetch(:user_id) != nil %>
 
-      <td>
-            <form action="/insert_follow_request" method="post">
-              <input type="hidden" name="query_recipient_id" value="<%= a_user.id %>">
+<% follow_request = FollowRequest.where({ :sender_id => @current_user.id, :recipient_id => a_user.id}).at(0) %>
 
-              <button>
-                Follow
-              </button>
-            </form>
+        <% if @current_user.sent_follow_requests.where({ :recipient_id => a_user.id}).at(0) == nil %>
+
+          <form action="/insert_follow_request" method="post">
+                <input type="hidden" name="query_recipient_id" value="<%= a_user.id%>">
+
+                <input type="hidden" name="query_sender_id" value="<%= @current_user.id%>">
+
+                <button>Follow</button>
+
+          </form>
+
+        <% elsif follow_request.status == "pending" %>
+
+            Request sent. <a href="/cancel_follow_request/<%= follow_request.id%>"> Cancel </a>
+
+        <% else%>
+            <a href="/delete_follow_request/<%= follow_request.id%>">Unfollow</a>
+        <% end%>
+      <% end%>
       </td>
-
-<% end %>
-
         <td>
           <a href="/users/<%= a_user.username %>">
             Show details
@@ -60,6 +64,5 @@
       <% end %>
     </table>
   </div>
-</div>
 
 <hr>

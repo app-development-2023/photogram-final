@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  # HOMEPAGE
+
   get("/", { :controller => "users", :action => "index" })
   
   # Routes for the Like resource:
@@ -37,6 +39,9 @@ Rails.application.routes.draw do
   
   # DELETE
   get("/delete_follow_request/:path_id", { :controller => "follow_requests", :action => "destroy" })
+
+ # CANCEL
+  get("/cancel_follow_request/:path_id", { :controller => "follow_requests", :action => "cancel"} )
 
   #------------------------------
 

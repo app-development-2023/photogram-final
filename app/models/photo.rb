@@ -17,6 +17,11 @@ class Photo < ApplicationRecord
   validates(:owner_id, { :presence => true })
 
   belongs_to(:photo_owner, {:class_name => "User", :foreign_key => "owner_id"})
+  has_many(:fan_followers, { :through => :fans, :source => :following })
+  has_many(:followers, { :through => :owner, :source => :following })
+  has_many(:fans, { :through => :likes, :source => :user })
+  has_many(:comments, { :class_name => "Comment", :foreign_key => "photo_id", :dependent => :destroy })
+  has_many(:likes, { :class_name => "Like", :foreign_key => "photo_id", :dependent => :destroy })
 
   def poster
     return User.where({ :id => self.owner_id }).at(0)

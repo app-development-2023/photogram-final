@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
 
   def new_registration_form
+
     render({ :template => "users/signup_form.html.erb"})
+    
   end
 
 
@@ -15,7 +17,6 @@ class UsersController < ApplicationController
 
   def create
     the_user = User.new
-
     the_user.username = params.fetch("input_username")
     the_user.password = params.fetch("input_password")
     the_user.password_confirmation = params.fetch("input_password_confirmation")
@@ -28,7 +29,7 @@ class UsersController < ApplicationController
 
     session[:user_id] = @the_user.id
 
-      redirect_to("/users/#{the_user.username})", { :notice => "User account created successfully." })
+      redirect_to("/", { :notice => "User account created successfully." })
     else
       redirect_to("/user_sign_up", { :alert => the_user.errors.full_messages.to_sentence })
     end
